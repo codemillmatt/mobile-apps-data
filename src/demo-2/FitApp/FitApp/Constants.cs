@@ -4,6 +4,7 @@ namespace FitApp.Core
 {
     public static class Constants
     {
-        public static readonly string WebServerBaseUrl = "https://abcdfitappweb.azurewebsites.net";
+#warning Enter your website name
+        public static readonly string WebServerBaseUrl = "ENTER YOUR WEBSITE NAME HERE";
     }
 }
