@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Text;
 using System.Collections.Generic;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace FitApp.Core
 {
@@ -19,14 +21,19 @@ namespace FitApp.Core
             client = new HttpClient();
         }
 
-        public async Task<List<TrainingSession>> GetTrainingSessions()
+        public async Task GetTrainingSessions()
         {
+            if (Connectivity.NetworkAccess == NetworkAccess.None)
+                return;
+
             var syncRequestUrl = $"{Constants.WebServerBaseUrl}{syncRequestBase}";
 
             try
             {
                 // create the sync request
-                var syncRequest = new SyncRequest { FromVersion = 0, UserId = "Matt" };
+                var userId = Preferences.Get(Constants.UserIdPreference, "Matt");
+
+                var syncRequest = new SyncRequest { FromVersion = 0, UserId = userId };
 
                 // perform the request
                 var request = new HttpRequestMessage(HttpMethod.Post, syncRequestUrl);
@@ -39,13 +46,14 @@ namespace FitApp.Core
                 var syncResultJson = await response.Content.ReadAsStringAsync();
                 var syncResult = JsonConvert.DeserializeObject<DataSyncResult>(syncResultJson);
 
-                return syncResult.TrainingData;
+                // save training sessions locally
+                var localData = DependencyService.Get<ILocalDataService>(DependencyFetchTarget.GlobalInstance);
+
+                localData.SaveSessionFromWeb(syncResult.TrainingData);                
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex);
-
-                return new List<TrainingSession>();
+                System.Diagnostics.Debug.WriteLine(ex);                
             }
         }
 

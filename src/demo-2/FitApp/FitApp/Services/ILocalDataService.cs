@@ -5,7 +5,7 @@ namespace FitApp.Core
 {
     public interface ILocalDataService
     {
-        public void SaveSessionFromWeb(List<TrainingSession> sessions, bool fullReload, int currentVersion);
+        public void SaveSessionFromWeb(List<TrainingSession> sessions);
         public List<TrainingSession> GetLocalSessions();
         public void DeleteAllLocalSessions();
     }

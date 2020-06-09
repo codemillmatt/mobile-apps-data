@@ -5,7 +5,7 @@ using Xamarin.Forms.Xaml;
 
 using FitApp.Core;
 using MonkeyCache.SQLite;
-
+using Xamarin.Essentials;
 
 namespace FitApp
 {
@@ -18,7 +18,14 @@ namespace FitApp
             DependencyService.Register<IWebDataService, WebDataService>();
             DependencyService.Register<ILocalDataService, LocalDataService>();
 
-            MainPage = new NavigationPage(new WorkoutHistoryPage());                
+            if (string.IsNullOrEmpty(Preferences.Get(Constants.UserIdPreference, string.Empty)))
+            {
+                MainPage = new NavigationPage(new LoginPage());
+            }
+            else
+            {
+                MainPage = new NavigationPage(new WorkoutHistoryPage());
+            }
 
             Barrel.ApplicationId = "fitapp";
         }

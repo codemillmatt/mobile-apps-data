@@ -6,7 +6,7 @@ namespace FitApp.Core
 {
     public interface IWebDataService
     {
-        public Task<List<TrainingSession>> GetTrainingSessions();
+        public Task GetTrainingSessions();
         public Task<bool> SaveTrainingSession(TrainingSessionRequest session);
 
     }
