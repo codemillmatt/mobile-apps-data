@@ -7,10 +7,6 @@ namespace FitApp.Core
 {
     public class LocalDataService : ILocalDataService
     {
-        public LocalDataService()
-        {
-        }
-
         public void SaveSessionFromWeb(List<TrainingSession> sessions, bool fullReload, int currentVersion)
         {
             if (fullReload)

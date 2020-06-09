@@ -1,20 +1,18 @@
-﻿    using System;
+﻿using System;
 using System.Net.Http;
-using System.Net;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.Text;
 using System.Collections.Generic;
 using Xamarin.Essentials;
-using Newtonsoft.Json;
 using Xamarin.Forms;
-using System.Net.Http.Headers;
-using System.Text;
 
 namespace FitApp.Core
 {
     public class WebDataService : IWebDataService
     {
-        string syncRequestUrl = "https://fitappbuild.azurewebsites.net/trainingsession/sync";
-        string saveRequestUrl = "https://fitappbuild.azurewebsites.net/trainingsession/record";
+        string syncRequestBase = "/trainingsession/sync";
+        string saveRequestBase = "/trainingsession/record";
 
         static HttpClient client;
 
@@ -27,9 +25,11 @@ namespace FitApp.Core
         {
             if (Connectivity.NetworkAccess == NetworkAccess.None)
             {
-                await Shell.Current.DisplayAlert("No Internet", "You do not have a connection to the internet","OK");
+                await Shell.Current.DisplayAlert("No Internet", "You do not have a connection to the internet", "OK");
                 return;
             }
+
+            var syncRequestUrl = $"{Constants.WebServerBaseUrl}{syncRequestBase}";
 
             try
             {
@@ -65,18 +65,23 @@ namespace FitApp.Core
             {
                 System.Diagnostics.Debug.WriteLine(ex);
             }
-        }        
+        }
 
         public async Task<bool> SaveTrainingSession(TrainingSessionRequest session)
-        {            
+        {
+            if (Connectivity.NetworkAccess == NetworkAccess.None)
+                return false;
+
+            var saveRequestUrl = $"{Constants.WebServerBaseUrl}{saveRequestBase}";
+
             try
-            {                
+            {
                 // get the user name - "Matt" will be seed data if nothing else
                 var userName = Preferences.Get(Constants.UserIdPreference, "Matt");
-                
+
                 // perform the request
                 var request = new HttpRequestMessage(HttpMethod.Post, saveRequestUrl);
-                                
+
                 request.Content = new StringContent(JsonConvert.SerializeObject(session), Encoding.UTF8, "application/json");
 
                 var response = await client.SendAsync(request);
@@ -84,7 +89,7 @@ namespace FitApp.Core
                 response.EnsureSuccessStatusCode();
 
                 return true;
-                
+
             }
             catch (Exception ex)
             {

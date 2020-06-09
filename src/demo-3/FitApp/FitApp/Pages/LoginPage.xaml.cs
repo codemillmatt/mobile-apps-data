@@ -7,11 +7,15 @@ namespace FitApp.Core
 {
     public partial class LoginPage : ContentPage
     {
+        LoginPageViewModel vm;
+
         public LoginPage()
         {
             InitializeComponent();
 
-            BindingContext = new LoginPageViewModel();
+            vm = new LoginPageViewModel();
+
+            BindingContext = vm;
         }
     }
 }

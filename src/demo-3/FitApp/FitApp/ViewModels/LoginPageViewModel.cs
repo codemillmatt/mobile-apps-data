@@ -23,8 +23,7 @@ namespace FitApp.Core
         {
             // write a user id if there isn't one            
             Preferences.Set(Constants.UserIdPreference, UserName);
-
-            //App.Current.MainPage = new AppShellPage();
+            
             App.Current.MainPage = new NavigationPage(new WorkoutHistoryPage());
         }
     }
