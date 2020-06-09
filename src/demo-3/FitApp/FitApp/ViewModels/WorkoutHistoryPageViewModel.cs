@@ -19,12 +19,13 @@ namespace FitApp.Core
             GetWorkoutHistoryCommand = new Command(async () => await ExecuteGetWorkoutHistoryCommand());
             StartNewWorkoutCommand = new Command(async () => await ExecuteStartWorkoutCommand());
             SignoutCommand = new Command(() => ExecuteSignoutCommand());
+
             TrainingSessions = new ObservableCollection<TrainingSession>();
 
             localSvc = DependencyService.Get<ILocalDataService>();
             cloudSvc = DependencyService.Get<IWebDataService>();
         }
-       
+
         bool isRefreshing;
         public bool IsRefreshing { get => isRefreshing; set => SetProperty(ref isRefreshing, value); }
 
@@ -43,17 +44,20 @@ namespace FitApp.Core
         {
             // update from the cloud            
             await cloudSvc.GetTrainingSessions();
-
+            
             // get the local sessions            
-            var localSessions = localSvc.GetLocalSessions();
+            var trainingSessions = localSvc.GetLocalSessions();
 
             TrainingSessions.Clear();
 
-            foreach (var session in localSessions)
+            if (trainingSessions != null)
             {
-                var workoutDate = DateTime.Parse(session.RecordedOn);
-                session.RecordedOnDisplay = workoutDate.ToString(@"MMMM dd @ hh:mm tt");
-                TrainingSessions.Add(session);
+                foreach (var session in trainingSessions)
+                {
+                    var workoutDate = DateTime.Parse(session.RecordedOn);
+                    session.RecordedOnDisplay = workoutDate.ToString(@"MMMM dd @ hh:mm tt");
+                    TrainingSessions.Add(session);
+                }
             }
 
             IsRefreshing = false;
@@ -62,8 +66,9 @@ namespace FitApp.Core
         void ExecuteSignoutCommand()
         {
             Preferences.Remove(Constants.UserIdPreference);
-            Preferences.Remove(Constants.DataSyncPointPreference);
 
+            localSvc.DeleteAllLocalSessions();
+            
             App.Current.MainPage = new NavigationPage(new LoginPage());
         }
 

@@ -81,7 +81,7 @@ namespace FitApp.Core
             double elapsedMillis = (double)elapsedMilliseconds / 1000;
             session.Duration = (int)Math.Round(elapsedMillis);
             session.WorkoutType = "Run";
-            
+
             var success = await webSvc.SaveTrainingSession(session);
 
             if (!success)
@@ -105,8 +105,8 @@ namespace FitApp.Core
         {
             NumberOfSteps += 2;
 
-            Distance = (int) Math.Round(NumberOfSteps * 1.6);
+            Distance = (int)Math.Round(NumberOfSteps * 1.6);
         }
-        
+
     }
 }

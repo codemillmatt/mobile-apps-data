@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FitApp.Core
@@ -7,6 +8,5 @@ namespace FitApp.Core
     {
         public Task GetTrainingSessions();
         public Task<bool> SaveTrainingSession(TrainingSessionRequest session);
-
     }
 }

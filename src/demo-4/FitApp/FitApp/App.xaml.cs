@@ -19,10 +19,7 @@ namespace FitApp
         public App()
         {
             InitializeComponent();
-
-            //DependencyService.Register<IWebDataService, MockWebDataService>();
-            //DependencyService.Register<ILocalDataService, MockLocalDataService>();
-
+            
             DependencyService.Register<IWebDataService, WebDataService>();
             DependencyService.Register<ILocalDataService, LocalDataService>();
           

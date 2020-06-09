@@ -13,8 +13,8 @@ namespace FitApp.Core
 {
     public class WebDataService : IWebDataService
     {
-        string syncRequestUrl = "https://fitappbuild.azurewebsites.net/trainingsession/sync";
-        string saveRequestUrl = "https://fitappbuild.azurewebsites.net/trainingsession/record";
+        string syncRequestBase = "/trainingsession/sync";
+        string saveRequestBase = "/trainingsession/record";
 
         static HttpClient client;
 
@@ -30,6 +30,8 @@ namespace FitApp.Core
                 await Shell.Current.DisplayAlert("No Internet", "You do not have a connection to the internet","OK");
                 return;
             }
+
+            var syncRequestUrl = $"{Constants.WebServerBaseUrl}{syncRequestBase}";
 
             try
             {
@@ -68,7 +70,12 @@ namespace FitApp.Core
         }        
 
         public async Task<bool> SaveTrainingSession(TrainingSessionRequest session)
-        {            
+        {
+            if (Connectivity.NetworkAccess == NetworkAccess.None)
+                return false;
+
+            var saveRequestUrl = $"{Constants.WebServerBaseUrl}{saveRequestBase}";
+
             try
             {                
                 // get the user name - "Matt" will be seed data if nothing else

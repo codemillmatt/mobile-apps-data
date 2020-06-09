@@ -11,15 +11,18 @@ namespace FitApp.Core
 {
     public class WorkoutHistoryPageViewModel : BaseViewModel
     {
+        ILocalDataService localSvc;
         IWebDataService cloudSvc;
 
         public WorkoutHistoryPageViewModel()
         {
             GetWorkoutHistoryCommand = new Command(async () => await ExecuteGetWorkoutHistoryCommand());
             StartNewWorkoutCommand = new Command(async () => await ExecuteStartWorkoutCommand());
+            SignoutCommand = new Command(() => ExecuteSignoutCommand());
 
             TrainingSessions = new ObservableCollection<TrainingSession>();
 
+            localSvc = DependencyService.Get<ILocalDataService>();
             cloudSvc = DependencyService.Get<IWebDataService>();
         }
 
@@ -35,22 +38,38 @@ namespace FitApp.Core
 
         public ICommand GetWorkoutHistoryCommand { get; }
         public ICommand StartNewWorkoutCommand { get; }
+        public ICommand SignoutCommand { get; }
 
         async Task ExecuteGetWorkoutHistoryCommand()
         {
             // update from the cloud            
-            var trainingSessions = await cloudSvc.GetTrainingSessions();
+            await cloudSvc.GetTrainingSessions();
+            
+            // get the local sessions            
+            var trainingSessions = localSvc.GetLocalSessions();
 
             TrainingSessions.Clear();
 
-            foreach (var session in trainingSessions)
+            if (trainingSessions != null)
             {
-                var workoutDate = DateTime.Parse(session.RecordedOn);
-                session.RecordedOnDisplay = workoutDate.ToString(@"MMMM dd @ hh:mm tt");
-                TrainingSessions.Add(session);
+                foreach (var session in trainingSessions)
+                {
+                    var workoutDate = DateTime.Parse(session.RecordedOn);
+                    session.RecordedOnDisplay = workoutDate.ToString(@"MMMM dd @ hh:mm tt");
+                    TrainingSessions.Add(session);
+                }
             }
 
             IsRefreshing = false;
+        }
+
+        void ExecuteSignoutCommand()
+        {
+            Preferences.Remove(Constants.UserIdPreference);
+
+            localSvc.DeleteAllLocalSessions();
+            
+            App.Current.MainPage = new NavigationPage(new LoginPage());
         }
 
         async Task ExecuteStartWorkoutCommand()

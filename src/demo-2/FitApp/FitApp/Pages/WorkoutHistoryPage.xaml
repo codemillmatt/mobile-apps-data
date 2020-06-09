@@ -14,22 +14,26 @@
     </d:ContentPage.BindingContext>
 
     <Grid>
-            <Grid.RowDefinitions>                
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="50" />                
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>                
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="50" />                
+        </Grid.RowDefinitions>
                        
-            <ListView ItemsSource="{Binding TrainingSessions}" Grid.Row="0" Grid.RowSpan="2">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding RecordedOnDisplay}" Detail="{Binding Distance, StringFormat='{0} m'}"/>                        
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+        <ListView ItemsSource="{Binding TrainingSessions}" Grid.Row="0" Grid.RowSpan="2">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding RecordedOnDisplay}" Detail="{Binding Distance, StringFormat='{0} m'}"/>                        
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
-            <Button Text="Start Workout" Margin="20,0,20,0" Grid.Row="2" Command="{Binding StartNewWorkoutCommand}" />
+        <Button Text="Start Workout" Margin="20,0,20,0" Grid.Row="2" Command="{Binding StartNewWorkoutCommand}" />
 
-        </Grid>
+    </Grid>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Signout" Command="{Binding SignoutCommand}"/>
+    </ContentPage.ToolbarItems>
 
 </ContentPage>
