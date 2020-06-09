@@ -23,10 +23,6 @@ namespace FitApp.Core.Pages
             base.OnAppearing();
 
             vm.GetWorkoutHistoryCommand.Execute(null);
-        }
-
-        void Button_Clicked(System.Object sender, System.EventArgs e)
-        {
-        }
+        }        
     }
 }

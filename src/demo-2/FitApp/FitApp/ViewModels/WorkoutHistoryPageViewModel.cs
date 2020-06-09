@@ -11,20 +11,18 @@ namespace FitApp.Core
 {
     public class WorkoutHistoryPageViewModel : BaseViewModel
     {
-        ILocalDataService localSvc;
         IWebDataService cloudSvc;
 
         public WorkoutHistoryPageViewModel()
         {
             GetWorkoutHistoryCommand = new Command(async () => await ExecuteGetWorkoutHistoryCommand());
             StartNewWorkoutCommand = new Command(async () => await ExecuteStartWorkoutCommand());
-            SignoutCommand = new Command(() => ExecuteSignoutCommand());
+
             TrainingSessions = new ObservableCollection<TrainingSession>();
 
-            localSvc = DependencyService.Get<ILocalDataService>();
             cloudSvc = DependencyService.Get<IWebDataService>();
         }
-       
+
         bool isRefreshing;
         public bool IsRefreshing { get => isRefreshing; set => SetProperty(ref isRefreshing, value); }
 
@@ -37,19 +35,15 @@ namespace FitApp.Core
 
         public ICommand GetWorkoutHistoryCommand { get; }
         public ICommand StartNewWorkoutCommand { get; }
-        public ICommand SignoutCommand { get; }
 
         async Task ExecuteGetWorkoutHistoryCommand()
         {
             // update from the cloud            
-            await cloudSvc.GetTrainingSessions();
-
-            // get the local sessions            
-            var localSessions = localSvc.GetLocalSessions();
+            var trainingSessions = await cloudSvc.GetTrainingSessions();
 
             TrainingSessions.Clear();
 
-            foreach (var session in localSessions)
+            foreach (var session in trainingSessions)
             {
                 var workoutDate = DateTime.Parse(session.RecordedOn);
                 session.RecordedOnDisplay = workoutDate.ToString(@"MMMM dd @ hh:mm tt");
@@ -57,14 +51,6 @@ namespace FitApp.Core
             }
 
             IsRefreshing = false;
-        }
-
-        void ExecuteSignoutCommand()
-        {
-            Preferences.Remove(Constants.UserIdPreference);
-            Preferences.Remove(Constants.DataSyncPointPreference);
-
-            App.Current.MainPage = new NavigationPage(new LoginPage());
         }
 
         async Task ExecuteStartWorkoutCommand()

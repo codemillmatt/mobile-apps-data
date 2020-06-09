@@ -14,9 +14,9 @@ namespace FitApp.Core
         {
             var sessions = new List<TrainingSession>
             {
-                                new TrainingSession { RecordedOn = DateTime.Now.ToShortDateString(), Steps = 500, Distance = 5},
-                                new TrainingSession { RecordedOn = DateTime.Now.ToShortDateString(), Steps = 200, Distance = 2}
-                            };
+                new TrainingSession { RecordedOn = DateTime.Now.ToShortDateString(), Steps = 500, Distance = 5},
+                new TrainingSession { RecordedOn = DateTime.Now.ToShortDateString(), Steps = 200, Distance = 2}
+            };
 
             return await Task.FromResult(sessions);
         }    
