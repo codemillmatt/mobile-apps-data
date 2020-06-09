@@ -10,8 +10,7 @@ using System.Collections.Generic;
 namespace FitApp.Core
 {
     public class WebDataService : IWebDataService
-    {
-        string syncBaseUrl = "https://xyvcfitappweb.azurewebsites.net";
+    {        
         string syncRequestBase = "/trainingsession/sync";
         string saveRequestBase = "/trainingsession/record";
 
@@ -24,7 +23,7 @@ namespace FitApp.Core
 
         public async Task<List<TrainingSession>> GetTrainingSessions()
         {
-            var syncRequestUrl = $"{syncBaseUrl}{syncRequestBase}";
+            var syncRequestUrl = $"{Constants.WebServerBaseUrl}{syncRequestBase}";
 
             try
             {                                
@@ -56,11 +55,8 @@ namespace FitApp.Core
         {            
             try
             {
-                var saveRequestUrl = $"{syncBaseUrl}{saveRequestBase}";
-
-                // get the user name - "Matt" will be seed data if nothing else
-                var userName = Preferences.Get(Constants.UserIdPreference, "Matt");
-                
+                var saveRequestUrl = $"{Constants.WebServerBaseUrl}{saveRequestBase}";
+                                
                 // perform the request
                 var request = new HttpRequestMessage(HttpMethod.Post, saveRequestUrl);
                                 

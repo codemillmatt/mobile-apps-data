@@ -31,7 +31,7 @@ namespace FitApp.Core
 
             EndWorkoutCommand = new Command(async () => await ExecuteEndWorkoutCommand());
 
-            UserId = Preferences.Get(Constants.UserIdPreference, "Matt");
+            UserId = "Matt";
 
             startTime = DateTime.Now;
             workoutTimer.Enabled = true;
@@ -75,7 +75,7 @@ namespace FitApp.Core
             var session = new TrainingSessionRequest();
 
             session.RecordedOn = String.Format(@"{0:yyyy-MM-dd HH:mm:ss z\:00}", DateTime.Now);
-            session.UserId = Preferences.Get(Constants.UserIdPreference, "Matt");
+            session.UserId = "Matt";
             session.Distance = Distance;
             session.Steps = NumberOfSteps;
             double elapsedMillis = (double)elapsedMilliseconds / 1000;
