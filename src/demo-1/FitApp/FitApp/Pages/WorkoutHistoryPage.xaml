@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:FitApp.Core"     
+    mc:Ignorable="d"    
+    x:Class="FitApp.Core.Pages.WorkoutHistoryPage"    
+    Title="My Workouts">
+
+    <d:ContentPage.BindingContext>
+        <local:WorkoutHistoryPageViewModel/>
+    </d:ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>                
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="50" />                
+            </Grid.RowDefinitions>
+                       
+            <ListView ItemsSource="{Binding TrainingSessions}" Grid.Row="0" Grid.RowSpan="2">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding RecordedOnDisplay}" Detail="{Binding Distance, StringFormat='{0} m'}"/>                        
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button Text="Start Workout" Margin="20,0,20,0" Grid.Row="2" Command="{Binding StartNewWorkoutCommand}" />
+
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>
