@@ -15,9 +15,7 @@
     </d:ContentPage.BindingContext>
 
     <ContentPage.Resources>
-        <ResourceDictionary>
-            <local:BorderColorConverter x:Key="borderColor"/>
-
+        <ResourceDictionary>            
             <DataTemplate x:Key="existingSessionTemplate">
                 <local:ExistingSessionView/>
             </DataTemplate>
@@ -45,7 +43,13 @@
                 <CollectionView
                     ItemsSource="{Binding TrainingSessions}" ItemTemplate="{StaticResource sessionTemplateSelector}"
                     Grid.Row="0" Grid.RowSpan="3">
-                    
+                    <CollectionView.EmptyView>
+                        <StackLayout Padding="20,100,20,0" VerticalOptions="Center" HorizontalOptions="Center">
+                            <sharpnado:MaterialFrame Style="{StaticResource AcrylicFrame}">
+                                <Label Text="Workout to see some info!" HorizontalTextAlignment="Center"/>
+                            </sharpnado:MaterialFrame>
+                        </StackLayout>
+                    </CollectionView.EmptyView>
                 </CollectionView>
             </RefreshView>
                             
