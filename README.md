@@ -16,7 +16,7 @@ You'll need the following:
 
 Once you have everything downloaded and installed you'll need to deploy the Azure resources. Click on the button below to do that.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcodemillmatt%2Fmobile-apps-data%2Fmaster%2Fazuredeploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/?WT.mc_id=mobileappsdata-github-masoucou#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcodemillmatt%2Fmobile-apps-data%2Fmaster%2Fazuredeploy.json)
 
 During the deploy process you'll be asked a couple of questions. They should be explanatory, and you can hover over the _i_ to get more info on it. But one important one is the `Prefix`. The deploy script will prefix all of the Azure resources it creates with the value you put into this field.
 
