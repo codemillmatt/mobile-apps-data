@@ -8,15 +8,15 @@ You can run all the demos yourself - from an emulator or a real device.
 
 You'll need the following:
 
-* [An Azure subscription (click here for a free one!)](https://azure.microsoft.com/free/?WT.mc_id=downloadthedata-github-masoucou)
-* [Xamarin - click here to install it](https://docs.microsoft.com/xamarin/get-started/installation/?pivots=macos&WT.mc_id=downloadthedata-github-masoucou)
-* [Azure Data Studio - click here to get it](https://docs.microsoft.com/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver15&WT.mc_id=downloadthedata-github-masoucou)
+* [An Azure subscription (click here for a free one!)](https://azure.microsoft.com/free/?WT.mc_id=mobile-0000-masoucou)
+* [Xamarin - click here to install it](https://docs.microsoft.com/xamarin/get-started/installation/?pivots=macos&WT.mc_id=mobile-0000-masoucou)
+* [Azure Data Studio - click here to get it](https://docs.microsoft.com/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver15&WT.mc_id=mobile-0000-masoucou)
 
 ### Deploy to Azure
 
 Once you have everything downloaded and installed you'll need to deploy the Azure resources. Click on the button below to do that.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcodemillmatt%2Fmobile-apps-data%2Fmaster%2Fazuredeploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/?WT.mc_id=mobile-0000-masoucou#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcodemillmatt%2Fmobile-apps-data%2Fmaster%2Fazuredeploy.json)
 
 During the deploy process you'll be asked a couple of questions. They should be explanatory, and you can hover over the _i_ to get more info on it. But one important one is the `Prefix`. The deploy script will prefix all of the Azure resources it creates with the value you put into this field.
 
@@ -83,13 +83,13 @@ var syncResult = JsonConvert.DeserializeObject<DataSyncResult>(syncResultJson);
 
 That's it! Your mobile app can now download data from the web!
 
-Learn more about making [web requests with the documentation here](https://docs.microsoft.com/xamarin/xamarin-forms/data-cloud/web-services/rest?WT.mc_id=downloadthedata-github-masoucou).
+Learn more about making [web requests with the documentation here](https://docs.microsoft.com/xamarin/xamarin-forms/data-cloud/web-services/rest?WT.mc_id=mobile-0000-masoucou).
 
 ### Local Data
 
 Sometimes though you want to save data locally to the device. This could be because you don't want to make round trips to the web. Or the user may be offline. Or you don't want to download a ton of data.
 
-There are numerous ways to save data on device. You can do so in [files](https://docs.microsoft.com/xamarin/xamarin-forms/data-cloud/data/files?tabs=windows&WT.mc_id=downloadthedata-github-masoucou), via [on-device databases](https://docs.microsoft.com/xamarin/xamarin-forms/data-cloud/data/databases?WT.mc_id=downloadthedata-github-masoucou), or by [preferences](https://docs.microsoft.com/xamarin/essentials/preferences?WT.mc_id=downloadthedata-github-masoucou).
+There are numerous ways to save data on device. You can do so in [files](https://docs.microsoft.com/xamarin/xamarin-forms/data-cloud/data/files?tabs=windows&WT.mc_id=mobile-0000-masoucou), via [on-device databases](https://docs.microsoft.com/xamarin/xamarin-forms/data-cloud/data/databases?WT.mc_id=mobile-0000-masoucou), or by [preferences](https://docs.microsoft.com/xamarin/essentials/preferences?WT.mc_id=mobile-0000-masoucou).
 
 We looked at preferences and a community powered tool called MonkeyCache that wraps up SQLite database calls in a nice, easy to use API.
 
@@ -99,7 +99,7 @@ What happens if you have data on multiple devices and one device has been offlin
 
 How do you get the data down from the internet with the least amount of work possible?
 
-Well, if you're using [Azure SQL Server](https://docs.microsoft.com/azure/azure-sql/database/?WT.mc_id=downloadthedata-github-masoucou) - you can use a function called Change Table which does all of the work for you.
+Well, if you're using [Azure SQL Server](https://docs.microsoft.com/azure/azure-sql/database/?WT.mc_id=mobile-0000-masoucou) - you can use a function called Change Table which does all of the work for you.
 
 And the best part is - there's no work in it for you. Your mobile app pretty much stays as is. Check out demo 3 for all the info.
 
